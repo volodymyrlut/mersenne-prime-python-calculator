@@ -7,6 +7,8 @@ This repository is my home submission for Cloud Infrastructure Basics course at 
 
 ### Tutorial
 
+#### Docker
+
 Build a container:
 
 ```
@@ -21,3 +23,44 @@ docker run -d -p 5026:5026 uculut/lut-ucu-prior-numbers
 
 Open localhost:5026 on your computer and click *Start* (optionally, you can enter a biggest power you want the algorithm to start calculations from).
 Clicking *Stop* button will kill calculation process and make server idle (*Start* button will be available again). Results are rendered on the page requested once in 15 seconds.
+
+#### Kubernetes
+
+To deploy to kubernetes locally, you will need to start minikube first:
+
+```
+minikube start
+```
+
+In some cases there is a need to specify VM you are using, for example:
+
+```
+minikube --vm-driver=hyperkit start
+```
+
+Next, you will need to deploy to local kubernetes cluster:
+
+```
+kubectl create -f deployment.yaml
+```
+
+Wait a couple of minutes. You can validate status of your deploy using the command:
+
+```
+kubectl create -f deployment.yaml
+```
+
+Now you can validate your deployment using the following command:
+
+```
+kubectl get pods
+```
+
+Which will produce you the following output:
+
+```
+NAME                 READY     STATUS    RESTARTS   AGE
+lut-mersenne-prime   1/1       Running   0          3m
+```
+
+

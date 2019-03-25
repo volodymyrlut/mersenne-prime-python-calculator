@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: lut-mersenne-prime
+  labels:
+    app: web
+spec:
+  containers:
+    - name: mersenne-flask
+      image: uculut/lut-ucu-prior-numbers
+      ports:
+        - containerPort: 5026
