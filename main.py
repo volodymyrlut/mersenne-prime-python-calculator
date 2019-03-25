@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request
-from multiprocessing import Process
+from multiprocessing import Process, Value
 import math
 app = Flask(__name__)
 
-results = []
+result = Value('i')
 
 def to_power(x, y):
     if y == 0:
@@ -22,12 +22,11 @@ def primeFactorization(n):
           return True
     return False
 
-def recursivePrime(power):
-  global results
+def recursivePrime(power, result):
   res = primeFactorization(to_power(2, power) - 1)
   if res:
-    results.append(power)
-  recursivePrime(power + 1)
+    result.value = power
+  recursivePrime(power + 1, result)
 
 t1 = False
 
@@ -36,7 +35,7 @@ def start():
   global t1
   power = 1
   power = int(request.args.get('power'))
-  t1 = Process(target=recursivePrime, args=[1])
+  t1 = Process(target=recursivePrime, args=(power, result))
   t1.start()
   return "OK"
 
@@ -47,7 +46,7 @@ def stop():
 
 @app.route('/heartbeat')
 def heartbeat():
-  return str(results)
+  return str(result.value)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():

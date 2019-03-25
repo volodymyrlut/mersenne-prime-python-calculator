@@ -71,7 +71,7 @@ input {
      <div>
          This code calculates <a href="https://en.wikipedia.org/wiki/Mersenne_prime">Mersenne's prime numbers</a>.
          <br/>
-         In mathematics, a Mersenne prime is a prime number that is one less than a power of two. You can enter the number into the input field and you will see powers on 2 rendered below.
+         In mathematics, a Mersenne prime is a prime number that is one less than a power of two. You can enter the number into the input field and you will see biggest powers of 2 it currently found printed below.
          <br/>
          The <a href="https://en.wikipedia.org/wiki/Largest_known_prime_number">largest known Mersenne power</a> that results into prior number is 82,589,933. If you will enter this number into the input field and receive any result, you most probably will win a $100.000 in the <a href="https://en.wikipedia.org/wiki/Great_Internet_Mersenne_Prime_Search">Great Internet Mersenne Prime Search</a>:) Good luck!
      </div>
@@ -102,9 +102,22 @@ input {
                     alert(err);
                 }
             });
+            window.repeat = setInterval(function() {
+                $.ajax({
+                    url: "/heartbeat",
+                    type: "get",
+                    success: function (response) {
+                        $("#result").html(response);
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+            }, 15 * 1000);
         });
         $("#stop").click(function(event){
             alert("Are you sure?")
+            clearInterval(window.repeat)
             $.ajax({
                 url: "/stop",
                 type: "get",
@@ -117,18 +130,6 @@ input {
                 }
             });
         });
-        setInterval(function() {
-            $.ajax({
-                url: "/heartbeat",
-                type: "get",
-                success: function (response) {
-                    $("#result").html(response);
-                },
-                error: function (err) {
-                    alert(err);
-                }
-            });
-        }, 60 * 1000);
    });
   </script>
 </html>
