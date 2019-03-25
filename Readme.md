@@ -1,3 +1,5 @@
+![Example of working service](example.png)
+
 ### Introduction
 
 This repository contains a Flask-based Python application that calculate next bigger power of 2 which would result in prior number (known as [Mersenne's prime](https://en.wikipedia.org/wiki/Mersenne_prime)).
