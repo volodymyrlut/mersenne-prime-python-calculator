@@ -64,3 +64,6 @@ lut-mersenne-prime   1/1       Running   0          3m
 ```
 
 
+Alternatively, you can use the ./deploy.sh script to install to minikube automatically
+
+
