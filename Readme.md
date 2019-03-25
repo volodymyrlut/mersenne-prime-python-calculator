@@ -8,13 +8,13 @@ This repository is my home submission for Cloud Infrastructure Basics course at 
 Build a container:
 
 ```
-docker build -t lut-ucu-prior-numbers:latest .
+docker build -t uculut/lut-ucu-prior-numbers:latest .
 ```
 
 Run a container:
 
 ```
-docker run -d -p 5026:5026 lut-ucu-prior-numbers
+docker run -d -p 5026:5026 uculut/lut-ucu-prior-numbers
 ```
 
 Open localhost:5000 on your computer and click *Start* (optionally, you can enter a biggest power you want the algorithm to start calculations from).
