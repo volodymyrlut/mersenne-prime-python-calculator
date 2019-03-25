@@ -19,5 +19,5 @@ Run a container:
 docker run -d -p 5026:5026 uculut/lut-ucu-prior-numbers
 ```
 
-Open localhost:5000 on your computer and click *Start* (optionally, you can enter a biggest power you want the algorithm to start calculations from).
+Open localhost:5026 on your computer and click *Start* (optionally, you can enter a biggest power you want the algorithm to start calculations from).
 Clicking *Stop* button will kill calculation process and make server idle (*Start* button will be available again). Results are rendered on the page requested once in 15 seconds.
