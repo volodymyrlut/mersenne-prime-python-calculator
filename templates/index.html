@@ -1,0 +1,134 @@
+<html>
+  <head>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <style>
+    html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  background: #162944;
+  font-family: "Lucida Console", Monaco, monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding: 10px 20%;
+}
+
+a {
+    color: white;
+    text-decoration: underline;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.button_slide {
+  color: #FFF;
+  border: 2px solid rgb(216, 2, 134);
+  border-radius: 0px;
+  padding: 18px 36px;
+  display: inline-block;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 0 #D80286;
+  -webkit-transition: ease-out 0.4s;
+  -moz-transition: ease-out 0.4s;
+  transition: ease-out 0.4s;
+  background: transparent;
+  margin: 20px;
+}
+
+.slide_down:hover {
+  box-shadow: inset 0 100px 0 0 #D80286;
+}
+
+input {
+	height: 25px;
+	margin-top: 20px;
+	border: 2px solid white;
+    color: white;
+    background: transparent;
+    width: 300px;
+    padding: 18px 36px;
+}
+
+#outer {
+  width: 364px;
+  margin: 50px auto 0 auto;
+  text-align: center;
+}
+  </style>
+  </head>
+  <body>
+     <div>
+         This code calculates <a href="https://en.wikipedia.org/wiki/Mersenne_prime">Mersenne's prime numbers</a>.
+         <br/>
+         In mathematics, a Mersenne prime is a prime number that is one less than a power of two. You can enter the number into the input field and you will see powers on 2 rendered below.
+         <br/>
+         The <a href="https://en.wikipedia.org/wiki/Largest_known_prime_number">largest known Mersenne power</a> that results into prior number is 82,589,933. If you will enter this number into the input field and receive any result, you most probably will win a $100.000 in the <a href="https://en.wikipedia.org/wiki/Great_Internet_Mersenne_Prime_Search">Great Internet Mersenne Prime Search</a>:) Good luck!
+     </div>
+     <div>
+         <input id="power" type="text" placeholder="Power of 2 here (default is 1)"/>
+     </div>
+     <div>
+        <button id="start" class="button_slide slide_down" type='button'> Start </button>
+        <button id="stop" class="button_slide slide_down" type='button'> Stop </button>
+     </div>
+     <div id="result"></div>
+  </body>
+  <script>
+   $(document).ready(function() {
+        $("#stop").hide();
+        $("#start").click(function(event){
+            var power = parseInt($("#power").val())
+            if(isNaN(power)) power = 1;
+            $.ajax({
+                url: "/start",
+                type: "get",
+                data: {power: power},
+                success: function(response) {
+                    $("#start").hide();
+                    $("#stop").show();
+                },
+                error: function(err) {
+                    alert(err);
+                }
+            });
+        });
+        $("#stop").click(function(event){
+            alert("Are you sure?")
+            $.ajax({
+                url: "/stop",
+                type: "get",
+                success: function(response) {
+                    $("#stop").hide();
+                    $("#start").show();
+                },
+                error: function(err) {
+                    alert(err);
+                }
+            });
+        });
+        setInterval(function() {
+            $.ajax({
+                url: "/heartbeat",
+                type: "get",
+                success: function (response) {
+                    $("#result").html(response);
+                },
+                error: function (err) {
+                    alert(err);
+                }
+            });
+        }, 60 * 1000);
+   });
+  </script>
+</html>
